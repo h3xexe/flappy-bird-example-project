@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,15 +11,19 @@ public class Bird : MonoBehaviour
     private bool isAir = true;
     public int zAngleLimit = 45;
     public Vector2 initialPosition;
+    public bool isDead = false;
 
+    private void Start()
+    {
+        Time.timeScale = 1f;
+    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        isAir = false;
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        isAir = true;
+        if(collision.gameObject.tag == "Dangerous")
+        {
+            isDead = true;
+            Time.timeScale = 0;
+        }
     }
 
     // Update is called once per frame
