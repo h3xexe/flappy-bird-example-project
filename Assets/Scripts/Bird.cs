@@ -8,25 +8,31 @@ public class Bird : MonoBehaviour
 
     public float velocity = 1f;
     public Rigidbody2D rb2d;
-    private bool isAir = true;
     public int zAngleLimit = 45;
     public Vector2 initialPosition;
     public bool isDead = false;
+    private GameManager gameManager;
 
     private void Start()
     {
-        Time.timeScale = 1f;
+        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
     }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Dangerous")
         {
             isDead = true;
-            Time.timeScale = 0;
+            gameManager.endGame();
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "Point")
+        {
+            gameManager.addScore(1);
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
