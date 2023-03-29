@@ -11,25 +11,20 @@ public class Bird : MonoBehaviour
     public int zAngleLimit = 45;
     public Vector2 initialPosition;
     public bool isDead = false;
-    private GameManager gameManager;
 
-    private void Start()
-    {
-        gameManager = GameObject.Find("GameManager").GetComponent<GameManager>();
-    }
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Dangerous")
         {
             isDead = true;
-            gameManager.endGame();
+            GameManager.Instance.endGame();
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "Point")
         {
-            gameManager.addScore(1);
+            GameManager.Instance.addScore(1);
         }
     }
 
@@ -42,7 +37,8 @@ public class Bird : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
-            rb2d.position = initialPosition;
+            GameManager.Instance.endGame();
+            //rb2d.position = initialPosition;
         }
     }
 }

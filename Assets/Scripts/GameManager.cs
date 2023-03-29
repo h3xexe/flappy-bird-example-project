@@ -8,37 +8,53 @@ public class GameManager : MonoBehaviour
 {
     public int score = 0;
     public Bird bird;
-    private UIScript canvas;
+
+    public static GameManager Instance { get; private set; }
+    
+    // This is a singleton class
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Start()
     {
-        canvas = GameObject.Find("UI").GetComponent<UIScript>();
         setScore(0);
     }
 
     public void addScore(int scoreToAdd)
     {
         score += scoreToAdd;
-        canvas.playerScore.text = score.ToString();
+        UIScript.Instance.playerScore.text = score.ToString();
     }
 
     public void setScore(int scoreToSet)
     {
         score = scoreToSet;
-        canvas.playerScore.text = score.ToString();
+        UIScript.Instance.playerScore.text = score.ToString();
     }
 
     public void startGame()
     {
+        UIScript.Instance.hideRestart();
         SceneManager.LoadScene(0);
         bird.isDead = false;
-        score = 0;
+        setScore(0);
         Time.timeScale = 1f;
     }
 
     public void endGame()
     {
-        canvas.restartScreen.SetActive(true);
+        UIScript.Instance.showRestart();
+        Time.timeScale = 0;
         /**GameObject myGameObject = GameObject.Find("MyGameObject");
 
         // Set the timescale for the GameObject
