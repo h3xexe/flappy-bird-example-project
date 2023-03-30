@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     public void startGame()
     {
         UIScript.Instance.hideRestart();
+        UIScript.Instance.showScore();
         SceneManager.LoadScene(0);
         bird.isDead = false;
         setScore(0);
@@ -54,10 +55,23 @@ public class GameManager : MonoBehaviour
     public void endGame()
     {
         UIScript.Instance.showRestart();
+        UIScript.Instance.hideScore();
         Time.timeScale = 0;
         /**GameObject myGameObject = GameObject.Find("MyGameObject");
 
         // Set the timescale for the GameObject
         myGameObject.GetComponent<Time>().timeScale = 0.5f;**/
+    }
+
+    public void startButton()
+    {
+        if (CountdownController.Instance && CountdownController.Instance.gameObject.activeSelf)
+        {
+            CountdownController.Instance.startCounter();
+        } else if(TapToStartController.Instance) {
+            SceneManager.LoadScene(0);
+            UIScript.Instance.hideRestart();
+            TapToStartController.Instance.gameObject.SetActive(true);
+        }
     }
 }
