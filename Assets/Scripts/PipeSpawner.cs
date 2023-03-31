@@ -18,7 +18,7 @@ public class PipeSpawner : MonoBehaviour
 
     IEnumerator SpawnPipes(float time)
     {
-        while (!bird.isDead)
+        while (!bird.isDead())
         {
             Instantiate(pipes, new Vector3(gameObject.transform.position.x, (1.345f - Random.Range(-height, height))), Quaternion.identity);
             yield return new WaitForSeconds(time);

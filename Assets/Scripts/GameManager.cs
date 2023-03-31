@@ -30,6 +30,15 @@ public class GameManager : MonoBehaviour
         setScore(0);
     }
 
+    private void Update()
+    {
+        //Debug.Log(bird.isDead());
+        if (bird.isDead() && Input.GetKeyDown(KeyCode.Space))
+        {
+            startGame();
+        }
+    }
+
     public void addScore(int scoreToAdd)
     {
         score += scoreToAdd;
@@ -47,13 +56,14 @@ public class GameManager : MonoBehaviour
         UIScript.Instance.hideRestart();
         UIScript.Instance.showScore();
         SceneManager.LoadScene(0);
-        bird.isDead = false;
+        bird.setBirdDeath(false);
         setScore(0);
         Time.timeScale = 1f;
     }
 
     public void endGame()
     {
+        bird.setBirdDeath(true);
         UIScript.Instance.showRestart();
         UIScript.Instance.hideScore();
         Time.timeScale = 0;

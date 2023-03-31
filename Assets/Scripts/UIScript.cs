@@ -27,6 +27,11 @@ public class UIScript : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        playerScore.gameObject.SetActive(false);
+    }
+
     public void showRestart()
     {
         restartScreen.gameObject.SetActive(true);

@@ -10,13 +10,11 @@ public class Bird : MonoBehaviour
     public Rigidbody2D rb2d;
     public int zAngleLimit = 45;
     public Vector2 initialPosition;
-    public bool isDead = false;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.tag == "Dangerous")
         {
-            isDead = true;
             GameManager.Instance.endGame();
         }
     }
@@ -28,13 +26,26 @@ public class Bird : MonoBehaviour
         }
     }
 
+    private bool birdIsDead = false;
+
+    public void setBirdDeath(Boolean value)
+    {
+        birdIsDead = value;
+    }
+
+    public bool isDead()
+    {
+        return birdIsDead;
+    }
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             rb2d.velocity = Vector2.up * velocity;
-            //rb2d.AddTorque(velocity/4);
+            // rb2d.AddTorque(velocity/4);           
         }
+        //Debug.Log(rb2d.velocity.y);
+        transform.eulerAngles = new Vector3(0, 0, rb2d.velocity.y * 10f);
         if (Input.GetKeyDown(KeyCode.R))
         {
             GameManager.Instance.endGame();

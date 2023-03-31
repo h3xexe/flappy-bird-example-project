@@ -27,7 +27,7 @@ public class TapToStartController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Space))
         {
             gameObject.SetActive(false);
             GameManager.Instance.startGame();
